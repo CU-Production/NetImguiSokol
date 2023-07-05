@@ -1,0 +1,2 @@
+add_executable(NetImguiClientApp main.cpp)
+target_link_libraries(NetImguiClientApp PRIVATE NetImguiClientLib imgui sokol)
