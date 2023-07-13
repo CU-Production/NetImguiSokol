@@ -7,7 +7,8 @@
 // SELECT RENDERING/OS API HERE
 //=============================================================================================
 #define HAL_API_PLATFORM_WIN32_DX11		0
-#define HAL_API_PLATFORM_SOKOL		    1
+#define HAL_API_PLATFORM_SOKOL		    0
+#define HAL_API_PLATFORM_HTML5		    1
 #define HAL_API_RENDERTARGET_INVERT_Y   1
 //#define HAL_API_RENDERTARGET_INVERT_Y   0
 //=============================================================================================

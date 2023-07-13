@@ -3,6 +3,8 @@ project(NetImguiSokol)
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_TOOLCHAIN_FILE "E:/wasm/emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake")
+
 # sokol
 add_library(sokol INTERFACE)
 target_include_directories(sokol INTERFACE 3rd_party/sokol)

@@ -125,7 +125,8 @@ void Disconnect(SocketInfo* pClientSocket)
 
 bool DataReceive(SocketInfo* pClientSocket, void* pDataIn, size_t Size)
 {
-	int resultRcv = recv(pClientSocket->mSocket, static_cast<char*>(pDataIn), static_cast<int>(Size), MSG_WAITALL);
+//	int resultRcv = recv(pClientSocket->mSocket, static_cast<char*>(pDataIn), static_cast<int>(Size), MSG_WAITALL);
+	int resultRcv = recv(pClientSocket->mSocket, static_cast<char*>(pDataIn), static_cast<int>(Size), 0);
 	return static_cast<int>(Size) == resultRcv;
 }
 

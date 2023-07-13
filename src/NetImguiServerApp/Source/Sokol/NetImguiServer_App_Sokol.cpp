@@ -13,8 +13,10 @@
 
 #define SOKOL_IMPL
 #define SOKOL_NO_ENTRY
-#define SOKOL_GLCORE33
+// #define SOKOL_GLCORE33
 //#define SOKOL_D3D11
+//#define SOKOL_WGPU
+#define SOKOL_GLES3
 #include "sokol_app.h"
 #include "sokol_gfx.h"
 #include "sokol_glue.h"
@@ -25,6 +27,15 @@
 sg_pass_action pass_action{};
 ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 std::string cmdArgs;
+
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#include <emscripten/websocket.h>
+#include <emscripten/threading.h>
+#include <emscripten/posix_socket.h>
+
+static EMSCRIPTEN_WEBSOCKET_T bridgeSocket = 0;
+#endif
 
 void init() {
     sg_desc desc = {};
@@ -134,6 +145,15 @@ int main(int argc, const char* argv[]) {
         cmdArgs.pop_back();
     }
 
+#ifdef __EMSCRIPTEN__
+    bridgeSocket = emscripten_init_websocket_to_posix_socket_bridge("ws://localhost:9999");
+    // Synchronously wait until connection has been established.
+    uint16_t readyState = 0;
+    do {
+        emscripten_websocket_get_ready_state(bridgeSocket, &readyState);
+        emscripten_thread_sleep(100);
+    } while (readyState == 0);
+#endif
 
     sapp_desc desc = {};
     desc.init_cb = init;

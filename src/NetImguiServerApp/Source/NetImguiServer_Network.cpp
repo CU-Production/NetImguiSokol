@@ -208,11 +208,14 @@ bool Communications_InitializeClient(NetImgui::Internal::Network::SocketInfo* pC
 	NetImgui::Internal::CmdVersion cmdVersionSend;
 	NetImgui::Internal::CmdVersion cmdVersionRcv;
 	NetImgui::Internal::StringCopy(cmdVersionSend.mClientName, "Server");
-		
-	if(	NetImgui::Internal::Network::DataSend(pClientSocket, reinterpret_cast<void*>(&cmdVersionSend), cmdVersionSend.mHeader.mSize) && 
-		NetImgui::Internal::Network::DataReceive(pClientSocket, reinterpret_cast<void*>(&cmdVersionRcv), cmdVersionRcv.mHeader.mSize) &&
-		cmdVersionRcv.mHeader.mType == NetImgui::Internal::CmdHeader::eCommands::Version && 
-		cmdVersionRcv.mVersion == NetImgui::Internal::CmdVersion::eVersion::_current )
+
+    bool bResultSend	= NetImgui::Internal::Network::DataSend(pClientSocket, reinterpret_cast<void*>(&cmdVersionSend), cmdVersionSend.mHeader.mSize);
+    bool bResultRcv		= NetImgui::Internal::Network::DataReceive(pClientSocket, reinterpret_cast<void*>(&cmdVersionRcv), cmdVersionRcv.mHeader.mSize);
+    bool mbConnected	= bResultRcv && bResultSend &&
+                          cmdVersionRcv.mHeader.mType == NetImgui::Internal::CmdHeader::eCommands::Version &&
+                          cmdVersionRcv.mVersion == NetImgui::Internal::CmdVersion::eVersion::_current;
+
+    if(	mbConnected )
 	{			
 		pClient->Initialize();
 		pClient->mInfoImguiVerID	= cmdVersionRcv.mImguiVerID;

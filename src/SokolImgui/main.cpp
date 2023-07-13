@@ -1,6 +1,8 @@
 #define SOKOL_IMPL
 #define SOKOL_NO_ENTRY
-#define SOKOL_GLCORE33
+// #define SOKOL_GLCORE33
+//#define SOKOL_WGPU
+#define SOKOL_GLES3
 #include "sokol_app.h"
 #include "sokol_gfx.h"
 #include "sokol_glue.h"
@@ -45,8 +47,7 @@ void init() {
     sg_shader_desc shd_desc = {};
     shd_desc.attrs[0].name = "aPosition";
     shd_desc.attrs[1].name = "aColor";
-    shd_desc.vs.source = R"(
-#version 330
+    shd_desc.vs.source = R"(#version 300 es
 layout(location=0) in vec3 aPosition;
 layout(location=1) in vec3 aColor;
 out vec4 vColor;
@@ -55,8 +56,8 @@ void main() {
   vColor = vec4(aColor, 1.0f);
 }
 )";
-    shd_desc.fs.source = R"(
-#version 330
+    shd_desc.fs.source = R"(#version 300 es
+precision mediump float;
 in vec4 vColor;
 out vec4 frag_color;
 void main() {
