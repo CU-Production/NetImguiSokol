@@ -340,9 +340,14 @@ void Popup_ClientConfigEdit()
 
 			// --- Port ---
 			int port = static_cast<int>(gPopup_ClientConfig_pConfig->mHostPort);
+#if __EMSCRIPTEN__
+            ImGui::InputInt("Host Port", &port);
+            gPopup_ClientConfig_pConfig->mHostPort = std::min<int>(0xFFFF, std::max<int>(1, port));
+#else
 			if( ImGui::InputInt("Host Port", &port, 1, 100, ImGuiInputTextFlags_EnterReturnsTrue) ){
 				gPopup_ClientConfig_pConfig->mHostPort = std::min<int>(0xFFFF, std::max<int>(1, port));
 			}
+#endif
 			ImGui::SameLine();
 			if (ImGui::Button("Default")){
 				gPopup_ClientConfig_pConfig->mHostPort = NetImgui::kDefaultClientPort;

@@ -30,6 +30,7 @@ ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 #include <emscripten/websocket.h>
 #include <emscripten/threading.h>
 #include <emscripten/posix_socket.h>
+#include <emscripten/key_codes.h>
 
 static EMSCRIPTEN_WEBSOCKET_T bridgeSocket = 0;
 #endif
@@ -104,23 +105,24 @@ int main() {
     io.IniFilename = nullptr;
     io.Fonts->AddFontDefault();
     // emscripten has no clearly defined key code constants
-    io.KeyMap[ImGuiKey_Tab] = 9;
-    io.KeyMap[ImGuiKey_LeftArrow] = 37;
-    io.KeyMap[ImGuiKey_RightArrow] = 39;
-    io.KeyMap[ImGuiKey_UpArrow] = 38;
-    io.KeyMap[ImGuiKey_DownArrow] = 40;
-    io.KeyMap[ImGuiKey_Home] = 36;
-    io.KeyMap[ImGuiKey_End] = 35;
-    io.KeyMap[ImGuiKey_Delete] = 46;
-    io.KeyMap[ImGuiKey_Backspace] = 8;
-    io.KeyMap[ImGuiKey_Enter] = 13;
-    io.KeyMap[ImGuiKey_Escape] = 27;
-    io.KeyMap[ImGuiKey_A] = 65;
-    io.KeyMap[ImGuiKey_C] = 67;
-    io.KeyMap[ImGuiKey_V] = 86;
-    io.KeyMap[ImGuiKey_X] = 88;
-    io.KeyMap[ImGuiKey_Y] = 89;
-    io.KeyMap[ImGuiKey_Z] = 90;
+    io.KeyMap[ImGuiKey_Tab]        = DOM_VK_TAB;
+    io.KeyMap[ImGuiKey_Space]      = DOM_VK_SPACE;
+    io.KeyMap[ImGuiKey_LeftArrow]  = DOM_VK_LEFT;
+    io.KeyMap[ImGuiKey_RightArrow] = DOM_VK_RIGHT;
+    io.KeyMap[ImGuiKey_UpArrow]    = DOM_VK_UP;
+    io.KeyMap[ImGuiKey_DownArrow]  = DOM_VK_DOWN;
+    io.KeyMap[ImGuiKey_Home]       = DOM_VK_HOME;
+    io.KeyMap[ImGuiKey_End]        = DOM_VK_END;
+    io.KeyMap[ImGuiKey_Delete]     = DOM_VK_DELETE;
+    io.KeyMap[ImGuiKey_Backspace]  = DOM_VK_BACK_SPACE;
+    io.KeyMap[ImGuiKey_Enter]      = DOM_VK_RETURN;
+    io.KeyMap[ImGuiKey_Escape]     = DOM_VK_ESCAPE;
+    io.KeyMap[ImGuiKey_A]          = DOM_VK_A;
+    io.KeyMap[ImGuiKey_C]          = DOM_VK_C;
+    io.KeyMap[ImGuiKey_V]          = DOM_VK_V;
+    io.KeyMap[ImGuiKey_X]          = DOM_VK_X;
+    io.KeyMap[ImGuiKey_Y]          = DOM_VK_Y;
+    io.KeyMap[ImGuiKey_Z]          = DOM_VK_Z;
 
     //    // IMGUI Font texture init
     {

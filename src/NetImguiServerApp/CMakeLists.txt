@@ -21,10 +21,11 @@ add_executable(NetImguiServerApp
         Source/html5/NetImguiServer_HAL_Sgfx.cpp
         )
 #target_compile_options(NetImguiServerApp PRIVATE -pthread -g)
-target_compile_options(NetImguiServerApp PRIVATE -pthread)
+target_compile_options(NetImguiServerApp PRIVATE -pthread -Oz --closure 1)
 target_link_libraries(NetImguiServerApp PRIVATE NetImguiClientLib imgui sokol
         -sMAX_WEBGL_VERSION=2
-        -sUSE_PTHREADS=1 -sPTHREAD_POOL_SIZE=4
+        -sUSE_PTHREADS=1
+        -sPTHREAD_POOL_SIZE=4
         "--preload-file Background.png"
         -lwebsocket.js
         -sALLOW_MEMORY_GROWTH
@@ -32,6 +33,9 @@ target_link_libraries(NetImguiServerApp PRIVATE NetImguiClientLib imgui sokol
         -sPROXY_TO_PTHREAD=1
         -sPROXY_POSIX_SOCKETS=1
         -sOFFSCREENCANVAS_SUPPORT
+        -flto
+        -sWASM_BIGINT
+        "--closure 1"
         )
 target_include_directories(NetImguiServerApp PRIVATE
         Source
